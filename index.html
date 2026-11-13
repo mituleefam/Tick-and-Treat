@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Tick &amp; Treat</title>
+  <meta name="description" content="Collect a stamp for every focus session, then open a surprise gift at the end of the day.">
+  <meta name="theme-color" content="#FFF6E9">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><g stroke='%234A2C2A' stroke-width='6' stroke-linejoin='round' stroke-linecap='round'><path fill='%23FFD56B' d='M50 26C40 6 22 10 26 20c2 6 14 7 24 6Zm0 0c10-20 28-16 24-6-2 6-14 7-24 6Z'/><rect fill='%23FF9DB5' x='16' y='42' width='68' height='52' rx='8'/><rect fill='%23FF9DB5' x='8' y='26' width='84' height='22' rx='7'/><path fill='none' stroke-width='8' d='M36 68l11 11 19-22'/></g></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="top">
+    <div class="brand-wrap">
+      <svg class="logo" viewBox="0 0 100 100" aria-hidden="true">
+        <path class="logo-bow" d="M50 26C40 6 22 10 26 20c2 6 14 7 24 6Zm0 0c10-20 28-16 24-6-2 6-14 7-24 6Z"/>
+        <rect class="logo-box" x="16" y="42" width="68" height="52" rx="8"/>
+        <rect class="logo-box" x="8" y="26" width="84" height="22" rx="7"/>
+        <path class="logo-tick" d="M36 68l11 11 19-22"/>
+      </svg>
+      <div>
+        <h1 class="brand">Tick <span class="amp">&amp;</span> Treat</h1>
+        <p class="streak" id="streak" hidden></p>
+      </div>
+    </div>
+    <p class="calendar" id="date"></p>
+  </header>
+
+  <nav class="tabs" aria-label="Screens">
+    <button class="tab" data-tab="today" aria-current="page">Today</button>
+    <button class="tab" data-tab="shelf">Gift shelf</button>
+    <button class="tab" data-tab="settings">Settings</button>
+  </nav>
+
+  <main>
+    <div class="view today" id="view-today">
+      <section class="card hero" aria-label="Today's summary">
+        <div class="mochi-row">
+          <div class="mochi" id="mochi" data-mood="sleepy" data-tier="0" aria-hidden="true">
+            <svg viewBox="0 0 120 116">
+              <g class="sprout">
+                <g class="g1"><path d="M60 34V20"/><path class="leaf" d="M60 22c-2-9-9-13-16-12 0 8 7 13 16 12Z"/></g>
+                <g class="g2"><path class="leaf" d="M60 22c2-9 9-13 16-12 0 8-7 13-16 12Z"/></g>
+                <g class="g3">
+                  <path d="M60 34V16"/>
+                  <g class="petals">
+                    <circle cx="60" cy="5" r="5"/><circle cx="69" cy="12" r="5"/><circle cx="66" cy="22" r="5"/>
+                    <circle cx="54" cy="22" r="5"/><circle cx="51" cy="12" r="5"/>
+                  </g>
+                  <circle class="pistil" cx="60" cy="14" r="4.5"/>
+                </g>
+                <g class="g4">
+                  <path class="spark" d="M20 18l2.5 6 6 2.5-6 2.5-2.5 6-2.5-6-6-2.5 6-2.5Z"/>
+                  <path class="spark" d="M101 12l2 4.5 4.5 2-4.5 2-2 4.5-2-4.5-4.5-2 4.5-2Z"/>
+                </g>
+              </g>
+              <path class="body" d="M60 33c30 0 49 24 49 46 0 23-20 33-49 33s-49-10-49-33c0-22 19-46 49-46Z"/>
+              <ellipse class="cheek" cx="32" cy="82" rx="8" ry="5"/>
+              <ellipse class="cheek" cx="88" cy="82" rx="8" ry="5"/>
+              <g class="eyes-open"><circle cx="43" cy="72" r="4.5"/><circle cx="77" cy="72" r="4.5"/></g>
+              <g class="eyes-sleepy line"><path d="M37 73h12"/><path d="M71 73h12"/></g>
+              <g class="eyes-happy line"><path d="M37 75c2-7 10-7 12 0"/><path d="M71 75c2-7 10-7 12 0"/></g>
+              <path class="line mouth-small" d="M55 82c2 3 8 3 10 0"/>
+              <path class="mouth-big" d="M52 81c1 10 15 10 16 0Z"/>
+            </svg>
+          </div>
+          <p class="bubble" id="bubble" aria-live="polite"></p>
+        </div>
+        <div class="total">
+          <strong id="total"></strong>
+          <span id="count"></span>
+        </div>
+        <div class="track" id="track"></div>
+        <p class="track-note" id="trackNote"></p>
+      </section>
+
+      <section class="action" id="action" aria-label="Add a focus session">
+        <div class="levels" id="levels"></div>
+        <button class="btn-big" id="addBtn"></button>
+      </section>
+
+      <section class="card stamps-card" aria-labelledby="stampsTitle">
+        <div class="stamps-head">
+          <h2 id="stampsTitle">Today's stamps</h2>
+          <button class="btn-ghost" id="clearToday" hidden>Clear today</button>
+        </div>
+        <div class="stamps" id="stamps"></div>
+      </section>
+
+      <section class="card gift-card" id="gift" aria-label="End-of-day gift box"></section>
+    </div>
+
+    <div class="view" id="view-shelf" hidden></div>
+    <div class="view" id="view-settings" hidden></div>
+  </main>
+
+  <div class="toast" id="toast" role="status" hidden>
+    <span id="toastMsg"></span>
+    <button id="toastAct" hidden></button>
+  </div>
+
+  <dialog class="reveal" id="reveal"></dialog>
+</body>
+</html>
